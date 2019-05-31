@@ -31,6 +31,10 @@ if (CC_EDITOR && Editor.isMainProcess) {
     require('./cocos2d/particle/CCParticleAsset');
     require('./cocos2d/tilemap/CCTiledMapAsset');
 }
+else if(CC_SERVER) {
+    require('./extensions/ccpool/CCNodePool');
+    require('./cocos2d/actions');
+}
 else {
     require('./cocos2d/particle');
     require('./cocos2d/tilemap');
