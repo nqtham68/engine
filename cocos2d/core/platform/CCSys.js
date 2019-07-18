@@ -624,7 +624,7 @@ function initSys () {
 
         _global.__platform = undefined;
     }
-    else if (CC_EDITOR && Editor.isMainProcess) {
+    else if ((CC_EDITOR && Editor.isMainProcess) || CC_SERVER) {
         sys.isMobile = false;
         sys.platform = sys.EDITOR_CORE;
         sys.language = sys.LANGUAGE_UNKNOWN;
@@ -641,6 +641,11 @@ function initSys () {
             height: 0
         };
         sys.__audioSupport = {};
+
+        if(CC_SERVER) {
+            sys.platform = sys.WIN32;
+        }
+
     }
     else if (CC_JSB || CC_RUNTIME) {
         let platform;

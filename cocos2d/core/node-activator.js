@@ -247,7 +247,7 @@ var NodeActivator = cc.Class({
     },
 
     activateComp: CC_EDITOR ? function (comp, preloadInvoker, onLoadInvoker, onEnableInvoker) {
-        if (!cc.isValid(comp, true)) {
+        if (!cc.isValid(comp, true) || (CC_SERVER && '_material' in comp)) {
             // destroyed before activating
             return;
         }
@@ -340,7 +340,7 @@ var NodeActivator = cc.Class({
         // ensure onDisable called
         cc.director._compScheduler.disableComp(comp);
 
-        if (comp.onDestroy && (comp._objFlags & IsOnLoadCalled)) {
+        if (comp.onDestroy && (comp._objFlags & IsOnLoadCalled) && !(CC_SERVER && '_material' in comp)) {
             comp.onDestroy();
         }
     },

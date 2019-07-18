@@ -303,7 +303,7 @@ var ComponentScheduler = cc.Class({
             var array = iterator.array;
             for (iterator.i = 0; iterator.i < array.length; ++iterator.i) {
                 let comp = array[iterator.i];
-                if (comp._enabled) {
+                if (comp._enabled && !(CC_SERVER && '_material' in comp)) {
                     comp.onEnable();
                     var deactivatedDuringOnEnable = !comp.node._activeInHierarchy;
                     if (!deactivatedDuringOnEnable) {
