@@ -151,6 +151,7 @@ if (CC_BUILD) {
     _global.CC_QQPLAY = CC_QQPLAY;
     _global.CC_RUNTIME = CC_RUNTIME;
     _global.CC_SUPPORT_JIT = CC_SUPPORT_JIT;
+    _global.CC_SERVER = _global.CC_SERVER ? _global.CC_SERVER : false;
 }
 else {
     // These default values only used in the editor or preview.
@@ -166,6 +167,7 @@ else {
     defineMacro('CC_WECHATGAME', !!(defined('wx') && (wx.getSystemInfoSync || wx.getSharedCanvas)));
     defineMacro('CC_QQPLAY', defined('bk'));
     defineMacro('CC_SUPPORT_JIT', !(CC_WECHATGAME || CC_QQPLAY || CC_RUNTIME));
+    defineMacro('CC_SERVER', false);
 }
 
 //

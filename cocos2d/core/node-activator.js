@@ -247,7 +247,7 @@ var NodeActivator = cc.Class({
     },
 
     activateComp: CC_EDITOR ? function (comp, preloadInvoker, onLoadInvoker, onEnableInvoker) {
-        if (!cc.isValid(comp, true) || (CC_SERVER && '_material' in comp)) {
+        if (!cc.isValid(comp, true)) {
             // destroyed before activating
             return;
         }
@@ -287,7 +287,7 @@ var NodeActivator = cc.Class({
             cc.director._compScheduler.enableComp(comp, onEnableInvoker);
         }
     } : function (comp, preloadInvoker, onLoadInvoker, onEnableInvoker) {
-        if (!cc.isValid(comp, true)) {
+        if (!cc.isValid(comp, true)  || this.isServerComp(comp)) {
             // destroyed before activating
             return;
         }
@@ -340,7 +340,7 @@ var NodeActivator = cc.Class({
         // ensure onDisable called
         cc.director._compScheduler.disableComp(comp);
 
-        if (comp.onDestroy && (comp._objFlags & IsOnLoadCalled) && !(CC_SERVER && '_material' in comp)) {
+        if (comp.onDestroy && (comp._objFlags & IsOnLoadCalled) && !this.isServerComp(comp)) {
             comp.onDestroy();
         }
     },
@@ -349,6 +349,12 @@ var NodeActivator = cc.Class({
         if (comp.resetInEditor) {
             callResetInTryCatch(comp);
         }
+    },
+
+    isServerComp: CC_SERVER ? function (comp) {
+        return '_material' in comp || comp instanceof cc.EditBox || comp instanceof cc.Mask;
+    } : function (comp) { 
+        return false; 
     }
 });
 
